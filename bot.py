@@ -3,6 +3,7 @@ import discord
 from dotenv import load_dotenv
 from discord.ext import commands
 import random
+from server import keep_alive
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
@@ -56,4 +57,5 @@ async def nine_nine(ctx):
     response = f'{name} is {word}'
     await ctx.send(response)
 
+keep_alive()
 bot.run(TOKEN)
