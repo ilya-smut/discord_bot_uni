@@ -5,26 +5,31 @@ from discord.ext import commands
 import random
 import complaints
 
+# Getting parameters from .env file
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 W_CHANNEL = os.getenv('WELCOME_CHANNEL')
 core_path = os.getenv('CORE_PATH')
 
+# Specifying permissions bot has. Default + members + messages
 intents = discord.Intents.default()
 intents.members = True
 intents.message_content = True
 
+# Specifying the symbol bot uses for commands
 bot = commands.Bot(command_prefix='!', intents=intents)
 
 
+# The message will be printed to the console if bot has successfully connected to discord
 @bot.event
 async def on_ready():
     print(f'{bot.user.name} has connected to Discord!')
 
 
+# The welcome message printed by the bot when a new user joins. You can change the content of welcome_message to make
+# your own custom message
 @bot.event
 async def on_member_join(member):
-
     welcome_channel = bot.get_channel(int(W_CHANNEL))
 
     if welcome_channel:
@@ -42,6 +47,7 @@ async def on_member_join(member):
         await welcome_channel.send(welcome_message)
 
 
+# Fun command that chooses a random user from members and calls them a random good word from the word_list
 @bot.command(name='encourage', help='Says good stuff about a random member of a server')
 async def nine_nine(ctx):
     guild = ctx.guild
@@ -59,6 +65,11 @@ async def nine_nine(ctx):
     await ctx.send(response)
 
 
+# The following function is used to add a complaint to a server's complaints file
+# It checks if the server's complaints directory exists and if not - creates one
+# Then it takes user's nickname and uses it as a key for the complaints' dictionary
+# If user id is already a key in dictionary, it adds 1 to it.
+# So if user adds a lot of complaints, their keys would look like 'userid', 'userid1', 'userid2', ...
 @bot.command(name='cmp', help='Files a complaint to the bot')
 async def add_complaint(ctx, *args):
     guild = ctx.guild
@@ -88,6 +99,7 @@ async def add_complaint(ctx, *args):
     await ctx.send('Complaint added with key = ' + str(key) + '; Text = ' + message)
 
 
+# Printing all complaints to the channel where command was called
 @bot.command(name='cmp-all', help='Prints all complaints')
 async def get_complaints(ctx):
     guild = ctx.guild
@@ -104,6 +116,8 @@ async def get_complaints(ctx):
     await ctx.send(bot_response)
 
 
+# Printing a single complaint to the channel where the command was called. User needs to specify id
+# after !cmp-get. Example: !cmp-get {complaint_id}
 @bot.command(name='cmp-get', help='Gets a complaint by complaint-id')
 async def get_complaint(ctx, arg1):
     guild = ctx.guild
@@ -119,4 +133,5 @@ async def get_complaint(ctx, arg1):
     else:
         await ctx.send('No complaint found')
 
+# Running the bot
 bot.run(TOKEN)

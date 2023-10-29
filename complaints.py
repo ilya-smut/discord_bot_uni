@@ -58,5 +58,3 @@ class ComplaintsDb:
             complaints.append(self.complaints[key])
 
         return complaints
-
-
