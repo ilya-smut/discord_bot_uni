@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 from discord.ext import commands
 import random
 import complaints
+from glossary import Glossary
 
 # Getting parameters from .env file
 load_dotenv()
@@ -132,6 +133,26 @@ async def get_complaint(ctx, arg1):
         await ctx.send(db.get_complaint(arg1))
     else:
         await ctx.send('No complaint found')
+
+
+# Using Glossary.py for obtaining definitions of the given word
+@bot.command(name='def', help='Gets definitions of the word')
+async def get_complaint(ctx, arg1):
+    rules = Glossary.Rules()
+    rules.set_limit_of_descriptions(3)
+    gl = Glossary()
+    word = gl.Word(arg1, rules)
+    output_message = '**' + arg1 + '**' + ': \n'
+    if word.exists():
+        for part_of_speech in word.get_parts_of_speech():
+            output_message = output_message + "--------" + part_of_speech + "--------\n"
+            for definition in word.get_definitions_of_part_of_speech(part_of_speech):
+                output_message = output_message + definition + '\n'
+    else:
+        output_message += "Couldn't find this word :("
+
+    await ctx.send(output_message)
+
 
 # Running the bot
 bot.run(TOKEN)
