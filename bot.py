@@ -5,6 +5,7 @@ from discord.ext import commands
 import random
 import complaints
 from glossary import Glossary
+import encoder
 
 # Getting parameters from .env file
 load_dotenv()
@@ -152,6 +153,27 @@ async def get_complaint(ctx, arg1):
         output_message += "Couldn't find this word :("
 
     await ctx.send(output_message)
+
+@bot.command(name='b64e', help='base64 encoding')
+async def b64e(ctx, *args):
+    text = ''.join(args)
+    await ctx.send(encoder.b64_e(text))
+
+@bot.command(name='b64d', help='base64 decoding')
+async def b64e(ctx, *args):
+    text = ''.join(args)
+    await ctx.send(encoder.b64_d(text))
+
+@bot.command(name='urle', help='url encoding')
+async def b64e(ctx, *args):
+    text = ''.join(args)
+    await ctx.send(encoder.url_e(text))
+
+@bot.command(name='urld', help='url decoding')
+async def b64e(ctx, *args):
+    text = ''.join(args)
+    await ctx.send(encoder.url_d(text))
+
 
 
 # Running the bot
