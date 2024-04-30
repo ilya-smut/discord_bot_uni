@@ -1,22 +1,51 @@
-A simple discord bot for a student discord chat
+# **Discord University Bot**
 
-It is built using discord.py
-https://github.com/Rapptz/discord.py
+The *Discord University Bot* is a feature-rich Discord bot designed by Cyber Security student at De Montfort University to enhance and simplify student cohort server management experience. With a wide range of useful commands, the bot aims to assist admins and provide users with fun and utility commands.
 
-Currently comes with a simple set of functions:
-1) Greet new members with a custom message in the welcome_channel (welcome channel's id should be specified in .env
-2) Fun !encourage command that chooses a random user from the server and gives them a random compliment
-3) "Complaints" set of command which allows users to input complaints in the bot. This set of complaints than can be used by a student rep to escalate it to programme leaders
-4) Bot can also give you a definition of the English word using !def {word} command
+## **Features**
 
-Separate file for complaints is created for each discord server. You need to specify the path for the directory that will store all complaints in .env
+### **Welcoming New Members**
 
-You can add a complaint using !cmp {message} command
-You can list all complaints using !cmp-all command
-You can print a single complaint using its id with !cmp-get {id} command
+The bot sends a custom welcome message to new members joining the server. You can modify the welcome message in the `bot.py` file.
 
-.env file specifies following parameters:
-DISCORD_TOKEN - your discord token
-WELCOME_CHANNEL - welcome-channel's id for your server
-CORE_PATH - the path to the directory that stores complaints
+### **Encouragement Command**
 
+The `encourage` command selects a random user from the server and compliments them with a word from a predefined list.
+
+### **Complaints System**
+
+Users can file complaints using the `cmp` command. The complaint is then saved with a unique key. All complaints can be viewed using the `cmp-all` command, or a specific complaint can be retrieved using its unique key with the `cmp-get` command.
+
+### **Word Definitions**
+
+The `def` command fetches definitions for a given word using an API, providing a useful tool for quick look-ups without leaving Discord.
+
+### **Encoding and Decoding Utilities**
+
+The bot provides commands for base64 and URL encoding and decoding, offering a handy utility for developers.
+
+## **Setup**
+
+To set up the bot, you need to specify the bot token, welcome channel, and the core path in a `.env` file.
+
+## **Usage**
+
+To use the bot, run `bot.run(TOKEN)` at the bottom of the `bot.py` file.
+
+## **Dependencies**
+
+The bot uses the following dependencies which need to be installed:
+
+- `os`
+- `discord`
+- `dotenv`
+- `commands`
+- `random`
+
+## **Contributing**
+
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+## **License**
+
+[MIT](https://choosealicense.com/licenses/mit/)
